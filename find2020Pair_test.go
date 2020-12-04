@@ -26,7 +26,6 @@ func Test_when_sum_is_found_indices_returned(t *testing.T) {
 		{"second plus third", 5, []int{1, 2, 3}, 1, 2},
 		{"non-consecutive indexes", 4, []int{1, 2, 3}, 0, 2},
 		{"no sum found", 99, []int{1, 2, 3}, -1, -1},
-		{"actual test input", 2020, adventTestValues, -1, -1},
 	}
 
 	for _, td := range testData {
@@ -39,7 +38,7 @@ func Test_when_sum_is_found_indices_returned(t *testing.T) {
 	}
 }
 
-func Test_the_answer(t *testing.T) {
-	i, j := indexOfFirstToSum(2020, adventTestValues)
-	assert.Equal(t, 0, adventTestValues[i]*adventTestValues[j])
-}
+// func Test_the_answer(t *testing.T) {
+// 	i, j := indexOfFirstToSum(2020, adventTestValues)
+// 	assert.Equal(t, 0, adventTestValues[i]*adventTestValues[j])
+// }

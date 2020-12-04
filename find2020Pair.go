@@ -13,9 +13,3 @@ func indexOfFirstToSum(sum int, input []int) (int, int) {
 	}
 	return -1, -1
 }
-
-// Find2020Pair returns true if two elements in the input add to 2020
-// func Find2020Pair(input []int) bool {
-
-// 	return false
-// }
