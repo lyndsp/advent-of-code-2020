@@ -60,5 +60,5 @@ func Test_day2_answer(t *testing.T) {
 		}
 	}
 
-	assert.Equal(t, 0, okCount)
+	assert.Equal(t, 628, okCount)
 }
