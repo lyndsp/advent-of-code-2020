@@ -14,6 +14,15 @@ type (
 	}
 )
 
+type (
+	// NewPasswordPolicy details
+	NewPasswordPolicy struct {
+		Index1, Index2 int
+		Policy         string
+		Password       string
+	}
+)
+
 // Parse does x
 func Parse(input string) (PasswordPolicy, error) {
 	min, max := 0, 0
@@ -33,6 +42,24 @@ func Parse(input string) (PasswordPolicy, error) {
 	}, nil
 }
 
+// ParseNew does x
+func ParseNew(input string) (NewPasswordPolicy, error) {
+	position1, position2 := 0, 0
+	policy, password := "", ""
+	_, err := fmt.Sscanf(input, "%d-%d %s %s", &position1, &position2, &policy, &password)
+
+	if err != nil {
+		return NewPasswordPolicy{}, err
+	}
+
+	return NewPasswordPolicy{
+		Index1:   position1 - 1,
+		Index2:   position2 - 1,
+		Policy:   string(policy[0]),
+		Password: password,
+	}, nil
+}
+
 // MeetsPolicy does x
 func (p PasswordPolicy) MeetsPolicy() bool {
 
@@ -45,4 +72,21 @@ func (p PasswordPolicy) MeetsPolicy() bool {
 	}
 
 	return policyCount >= p.Min && policyCount <= p.Max
+}
+
+// MeetsNewPolicy does x
+func (p NewPasswordPolicy) MeetsNewPolicy() bool {
+
+	sAtFirstIndex := string(p.Password[p.Index1])
+	sAtSecondIndex := string(p.Password[p.Index2])
+
+	if sAtFirstIndex == p.Policy && sAtSecondIndex != p.Policy {
+		return true
+	}
+
+	if sAtFirstIndex != p.Policy && sAtSecondIndex == p.Policy {
+		return true
+	}
+
+	return false
 }
