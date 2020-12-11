@@ -39,10 +39,26 @@ func Test_passwordMeetsPolicy(t *testing.T) {
 	for _, td := range testData {
 		t.Run(td.input, func(t *testing.T) {
 			p, err := passwordpolicy.Parse(td.input)
+			require.NoError(t, err)
+
 			ok := p.MeetsPolicy()
 
-			require.NoError(t, err)
 			assert.Equal(t, td.meetsPolicy, ok)
 		})
 	}
+}
+
+func Test_day2_answer(t *testing.T) {
+	okCount := 0
+
+	for _, v := range day2TestInput {
+		p, err := passwordpolicy.Parse(v)
+		require.NoError(t, err)
+
+		if p.MeetsPolicy() {
+			okCount++
+		}
+	}
+
+	assert.Equal(t, 0, okCount)
 }
