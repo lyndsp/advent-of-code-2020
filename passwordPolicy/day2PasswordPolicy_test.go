@@ -27,13 +27,22 @@ func Test_invalidFormatGivesError(t *testing.T) {
 
 func Test_passwordMeetsPolicy(t *testing.T) {
 
-	p := passwordpolicy.PasswordPolicy{
-		Min:      1,
-		Max:      3,
-		Policy:   'a',
-		Password: "abcde",
+	testData := []struct {
+		input       string
+		meetsPolicy bool
+	}{
+		{"1-3 a: abcde", true},
+		{"1-3 b: cdefg", false},
+		{"2-9 c: ccccccccc", true},
 	}
-	ok := p.MeetsPolicy()
 
-	assert.True(t, ok)
+	for _, td := range testData {
+		t.Run(td.input, func(t *testing.T) {
+			p, err := passwordpolicy.Parse(td.input)
+			ok := p.MeetsPolicy()
+
+			require.NoError(t, err)
+			assert.Equal(t, td.meetsPolicy, ok)
+		})
+	}
 }

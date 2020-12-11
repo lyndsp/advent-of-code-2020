@@ -36,5 +36,13 @@ func Parse(input string) (PasswordPolicy, error) {
 // MeetsPolicy does x
 func (p PasswordPolicy) MeetsPolicy() bool {
 
-	return false
+	policyCount := 0
+
+	for _, c := range p.Password {
+		if c == p.Policy {
+			policyCount++
+		}
+	}
+
+	return policyCount >= p.Min && policyCount <= p.Max
 }
