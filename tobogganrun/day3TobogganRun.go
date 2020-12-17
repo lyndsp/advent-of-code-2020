@@ -1,24 +1,25 @@
 package tobogganrun
 
 // CountTrees through the route
-func CountTrees(mountainMap []string) int {
+func CountTrees(right int, down int, mountainMap []string) int {
 	treeCount := 0
-	columnIndex := 0
+	rightCounter := 1
+	rowIndex := down
 
-	for rowIndex, row := range mountainMap {
-		if rowIndex == 0 {
-			continue
+	for rowIndex < len(mountainMap) {
+		currentRow := mountainMap[rowIndex]
+		columnIndex := right * rightCounter
+
+		for columnIndex >= len(currentRow) {
+			currentRow += currentRow
 		}
 
-		columnIndex = 3 * rowIndex
-
-		for columnIndex > len(row) {
-			row += row
-		}
-
-		if row[columnIndex] == '#' {
+		if currentRow[columnIndex] == '#' {
 			treeCount++
 		}
+
+		rowIndex += down
+		rightCounter++
 	}
 
 	return treeCount
