@@ -6,35 +6,28 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_when_map_is_empty_tree_count_is_zero(t *testing.T) {
+func Test_tree_count_matches_expected(t *testing.T) {
 
-	mountainMap := []string{""}
-	result := CountTrees(mountainMap)
+	testData := []struct {
+		name        string
+		mountainMap []string
+		treeCount   int
+	}{
+		{"Empty map", []string{""}, 0},
+		{"First two rows", []string{"..##.......", "#...#...#..", ".#....#..#."}, 1},
+		{"First four rows", []string{"..##.......", "#...#...#..", ".#....#..#.", "..#.#...#.#"}, 1},
+		{"First five rows", []string{"..##.......", "#...#...#..", ".#....#..#.", "..#.#...#.#", ".#...##..#."}, 2},
+	}
 
-	assert.Equal(t, 0, result)
+	for _, td := range testData {
+		t.Run(td.name, func(t *testing.T) {
+			result := CountTrees(td.mountainMap)
+
+			assert.Equal(t, td.treeCount, result)
+		})
+	}
 }
 
-func Test_tree_count_is_one_for_first_two_rows(t *testing.T) {
-
-	mountainMap := []string{"..##.......", "#...#...#..", ".#....#..#."}
-	result := CountTrees(mountainMap)
-
-	assert.Equal(t, 1, result)
-}
-func Test_tree_count_is_one_for_first_four_rows(t *testing.T) {
-
-	mountainMap := []string{"..##.......", "#...#...#..", ".#....#..#.", "..#.#...#.#"}
-	result := CountTrees(mountainMap)
-
-	assert.Equal(t, 1, result)
-}
-func Test_tree_count_is_two_for_first_five_rows(t *testing.T) {
-
-	mountainMap := []string{"..##.......", "#...#...#..", ".#....#..#.", "..#.#...#.#", ".#...##..#."}
-	result := CountTrees(mountainMap)
-
-	assert.Equal(t, 2, result)
-}
 func Test_tree_count_is_seven_for_sample_input(t *testing.T) {
 
 	mountainMap := []string{
